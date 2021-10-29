@@ -33,25 +33,6 @@
 //     descriptionArticle.textContent = data[i].description;
 // }
 
-// function getDataFromApi() {
-//   fetch("http://localhost:3000/api/products/")
-//     .then((response) => response.json())
-//     .then((data) => {
-//       //for (let i = 0; i < data.length; i++) {
-//       //for(product of data) {
-//       data.map((product) => {
-//         //createProduct(data, i);
-//         document.querySelector(".items").innerHTML += 
-//             `<a href="./product.html?id=${product._id}">
-//                 <article>
-//                 <img src="${product.imageUrl}" alt="${product.altTxt}">
-//                 <h3 class="productName">${product.name}</h3>
-//                 <p class="productDescription">${product.description}</article>
-//             </a>`;
-//       });
-//     });
-// }
-
 function getDataFromApi() {
     fetch("http://localhost:3000/api/products")
       .then((response) => response.json())
