@@ -26,6 +26,9 @@ function getProductFromId() {
         }
 
     });
+
+    localStorage.setItem("#quantity",ol.innerHTML);
 };
+
 
 getProductFromId();
