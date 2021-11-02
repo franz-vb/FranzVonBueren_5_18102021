@@ -1,5 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search); 
 const idProduct = urlParams.get("id");
+const btnCart = document.querySelector("#addToCart");
+const itemQty = document.querySelector('#quantity');
 
 let myProduct; 
 let productTitle = document.querySelector("#title");
@@ -27,8 +29,11 @@ function getProductFromId() {
 
     });
 
-    localStorage.setItem("#quantity",ol.innerHTML);
 };
 
+btnCart.addEventListener("click", () => {
+
+    localStorage.setItem(`${idProduct}`, JSON.stringify([productColorsOptions.value, itemQty.value]));
+})
 
 getProductFromId();
