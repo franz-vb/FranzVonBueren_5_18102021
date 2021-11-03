@@ -11,21 +11,20 @@ let productImg = document.querySelector(".item__img");
 let productColorsOptions = document.querySelector('#colors');
 
 function getProductFromId() {
-    fetch("http://localhost:3000/api/products")
+    fetch("http://localhost:3000/api/products/"+ idProduct)
     .then(response => response.json())
-    .then(data => { 
+    .then(product => { 
 
-        myProduct = data.filter(product => idProduct == product._id);
+        productTitle.textContent = `${product.name}`;
+        productDescription.textContent = `${product.description}`
+        productPrice.textContent = `${product.price}`;
+        productImg.innerHTML += `<img src=${product.imageUrl} alt="${product.altTxt}"/>`;
 
-        productTitle.textContent = `${myProduct[0].name}`;
-        productDescription.textContent = `${myProduct[0].description}`
-        productPrice.textContent = `${myProduct[0].price}`;
-        productImg.innerHTML += `<img src=${myProduct[0].imageUrl} alt=Photographie d'un canapé />`;
-
-        for (let i = 0; i < myProduct[0].colors.length; i++) {
-
-            productColorsOptions.innerHTML += `<option value=${myProduct[0].colors[i]}>${myProduct[0].colors[i]}</option>`;
-        }
+            
+        //for (let i = 0; i < product.colors.length; i++) {
+            product.colors.map((color) => {  
+            productColorsOptions.innerHTML += `<option value="${color}">${color}</option>`;
+            })
 
     });
 
@@ -33,7 +32,26 @@ function getProductFromId() {
 
 btnCart.addEventListener("click", () => {
 
-    localStorage.setItem(`${idProduct}`, JSON.stringify([productColorsOptions.value, itemQty.value]));
+    let cart;
+
+    if (localStorage.getItem(`${idProduct}`)) {
+
+        cart = JSON.parse(localStorage.getItem(`${idProduct}`));
+        cart[1] = parseInt(cart[1]);
+
+        if (cart[0] == productColorsOptions.value) {
+
+            cart[1] += parseInt(itemQty.value);
+            localStorage.setItem(`${idProduct}`, JSON.stringify(cart));
+        }
+        
+    }
+
+    else {
+        localStorage.setItem(`${idProduct}`, JSON.stringify([productColorsOptions.value, itemQty.value]));
+        alert("Produit ajouté au panier");
+    }
+
 })
 
 getProductFromId();

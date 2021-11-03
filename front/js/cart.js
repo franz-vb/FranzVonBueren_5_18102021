@@ -9,7 +9,7 @@ function addCartFromProduct() {
           if (localStorage.getItem(`${product._id}`)) {
 
             cart = JSON.parse(localStorage.getItem(`${product._id}`));
-
+console.log(cart);
             document.querySelector("#cart__items").innerHTML += `
             <article class="cart__item" data-id="${product._id}">
             <div class="cart__item__img">
@@ -18,6 +18,7 @@ function addCartFromProduct() {
             <div class="cart__item__content">
               <div class="cart__item__content__titlePrice">
                 <h2>${product.name}</h2>
+                <p>${cart[0]}</p>
                 <p>${product.price * cart[1]} €</p>
               </div>
               <div class="cart__item__content__settings">

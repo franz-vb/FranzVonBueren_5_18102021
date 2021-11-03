@@ -40,7 +40,6 @@ function getDataFromApi() {
         //for (let i = 0; i < data.length; i++) {
         //for(product of data) {
         data.map((product) => {
-          //createProduct(data, i);
           document.querySelector(".items").innerHTML += `
               <a href=./product.html?id=${product._id}>
                   <article>
