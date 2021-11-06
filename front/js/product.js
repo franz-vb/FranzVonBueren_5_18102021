@@ -28,6 +28,7 @@ function getProductFromId() {
 
 };
 
+//Ajouter ua panier.
 btnPanier.addEventListener("click", () => {
 
     //Stocker le localStorage dans le tableau cart
@@ -36,44 +37,42 @@ btnPanier.addEventListener("click", () => {
     //On vérifie si dans le localStorage se trouve la clé "idProduct"
     if (localStorage.getItem(`${idProduct}`)) {
 
-
-        //Si oui alors on va boucler afin de vérifier les éléments pairs qui sont censés être la couleur
+        //boucler afin de vérifier les éléments pairs = couleur.
         for (let i = 0; i < cart.length; i = i + 2) {
 
-            //Si la couleur qu'on a sélectionné (productColorsOptions.value) est égale à celle présente dans l'Item du localStorage, alors : 
+            //couleur qu'on a sélectionnée est égale à celle présente dans l'Item du localStorage
             if (cart[i] == productColorsOptions.value) {
-                //On modifier la quantité de cette couleur
-                //Et on balance la variable booléenne isColorPresent à true
-                isColorPresent = true;    
-                cart[i + 1] += parseInt(itemQty.value);
+                isColorPresent = true; 
+                //On modifier la quantité de cette couleur 
+                cart[i + 1] += parseInt(itemQty.value);  
                 localStorage.setItem(`${idProduct}`, JSON.stringify(cart));
                 break;
             }
 
             //Si la couleur sélectionnée n'est pas la même que la couleur de l'Item, alors on passe le booléen isColorPresent à false
-            //On utilise ici un booléen car si dans le else on push des nouveaux éléments dans le tableau cart, on va créer une boucle infini car mon FOR est dépendant 
-            //d'une longueur et cette longueur est modifiée à chaque fois.
+            //On utilise ici un booléen car si dans le else on push des nouveaux éléments dans le tableau cart, on va créer une boucle infini 
+            //car mon FOR est dépendant d'une longueur et cette longueur est modifiée à chaque fois.
             else {
                 isColorPresent = false;
             }
         }
 
-        //Si le booléen isColorPresent est à False, cela veut dire qu'on a séléctionnée un produit déjà présent dans le local mais qui a une couleur différente
+        //Si le booléen isColorPresent est à False, cela veut dire qu'on a séléctionnée un produit déjà présent dans le local mais qui a 
+        //une couleur différente.
 
         if (!isColorPresent) {
 
-            //Donc on ajoute deux nouveaux éléments au tableau cart avec la nouvelle couleur et la nouvelle quantité
-            //On push dans le tableau la nouvelle couleur
+            //Donc on ajoute deux nouveaux éléments au tableau cart
             cart.push(productColorsOptions.value);
-            //On push dans le tableau la nouvelle quantité
             cart.push(parseInt(itemQty.value));
-            //On met à jour le localStorage en pushant le nouveau tableau qui contient les nouveaux éléments
             localStorage.setItem(`${idProduct}`, JSON.stringify(cart));
 
         }  
     }
 
-    else {
+    else {//Quand j'appuie sur panier, si idProduct n'existe pas dans le localStorage alors éxécute le code suivant
+        //Ajoute au localStorage un nouvel item qui contient une clé (idProduct) et une valeur (ici un tableau qui contient la couleur 
+        //sélectionnée ainsi que la quantité)
 
         localStorage.setItem(`${idProduct}`, JSON.stringify([productColorsOptions.value, parseInt(itemQty.value)]));
         alert("Produit ajouté au panier");
