@@ -1,6 +1,28 @@
 let cart;
 
+function handleOnChange() {
+  const inputQty = document.getElementsByClassName("itemQuantity");
+  const qtyInput = document.getElementsByClassName("qty");
+  const priceProduct = document.getElementsByClassName("priceProduct");
+  const nameProduct = document.getElementsByClassName("nameProduct");
+
+  for (let i = 0; i < inputQty.length; i++) {
+
+    inputQty[i].addEventListener('change', (e) => {
+
+      if (!localStorage.getItem(`${nameProduct[i].textContent}`)) {
+        localStorage.setItem(`${nameProduct[i].textContent}`, JSON.stringify(parseInt(priceProduct[i].textContent)));
+      }
+
+      qtyInput[i].textContent = `Qté : ${e.target.value}`;
+      priceProduct[i].textContent =  localStorage.getItem(`${nameProduct[i].textContent}`) * e.target.value;
+      
+    })
+  }
+}
+
 function displayProductWithSameId(index1, index2, product) {
+
   document.querySelector("#cart__items").innerHTML += `
   <article class="cart__item" data-id="${product._id}">
     <div class="cart__item__img">
@@ -8,13 +30,13 @@ function displayProductWithSameId(index1, index2, product) {
     </div>
     <div class="cart__item__content">
       <div class="cart__item__content__titlePrice">
-        <h2>${product.name}</h2>
+        <h2 class="nameProduct">${product.name}</h2>
         <p>${cart[index1]}</p>
-        <p>${product.price * cart[index2]} €</p>
+        <p class="priceProduct">${product.price * cart[index2]} €</p>
       </div>
       <div class="cart__item__content__settings">
         <div class="cart__item__content__settings__quantity">
-          <p>Qté : ${cart[index2]}</p>
+          <p class="qty">Qté : ${cart[index2]}</p>
           <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value=${cart[index2]}>
         </div>
         <div class="cart__item__content__settings__delete">
@@ -23,6 +45,7 @@ function displayProductWithSameId(index1, index2, product) {
       </div>
     </div>
   </article>`
+
 }
  
 function addCartFromProduct() {
@@ -45,8 +68,14 @@ function addCartFromProduct() {
             }
 
           }
+          
+        })
       })
-    })
-}
+      
+      setTimeout(function() {
+         handleOnChange(); 
+        }, 1000);
 
+  }
+    
   addCartFromProduct();
