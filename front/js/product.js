@@ -21,14 +21,14 @@ function getProductFromId() {
         productPrice.textContent = `${product.price}`;
         productImg.innerHTML += `<img src=${product.imageUrl} alt=Photographie d'un canapé />`;
 
-        product.colors.map((color) => {
+        product.colors.forEach((color) => {
             productColorsOptions.innerHTML += `<option value="${color}">${color}</option>`;
         })
     });
 
 };
 
-//Ajouter ua panier.
+//Ajouter au panier.
 btnPanier.addEventListener("click", () => {
 
     //Stocker le localStorage dans le tableau cart
@@ -36,17 +36,18 @@ btnPanier.addEventListener("click", () => {
 
     //On vérifie si dans le localStorage se trouve la clé "idProduct"
     if (localStorage.getItem(`${idProduct}`)) {
-
+        console.log(cart);
         //boucler afin de vérifier les éléments pairs = couleur.
-        for (let i = 0; i < cart.length; i = i + 2) {
-
-            //couleur qu'on a sélectionnée est égale à celle présente dans l'Item du localStorage
-            if (cart[i] == productColorsOptions.value) {
+        //for (let i = 0; i < cart.length; i = i + 2) {
+            cart.map((element) => {
+                console.log(element.color);
+                //couleur qu'on a sélectionnée est égale à celle présente dans l'Item du localStorage
+            if (element.color == productColorsOptions.value) {
                 isColorPresent = true; 
                 //On modifier la quantité de cette couleur 
-                cart[i + 1] += parseInt(itemQty.value);  
-                localStorage.setItem(`${idProduct}`, JSON.stringify(cart));
-                break;
+                //cart[i + 1] += parseInt(itemQty.value);  
+                //localStorage.setItem(`${idProduct}`, JSON.stringify(cart));
+                //break;
             }
 
             //Si la couleur sélectionnée n'est pas la même que la couleur de l'Item, alors on passe le booléen isColorPresent à false
@@ -55,7 +56,9 @@ btnPanier.addEventListener("click", () => {
             else {
                 isColorPresent = false;
             }
-        }
+            }) 
+    
+        //}
 
         //Si le booléen isColorPresent est à False, cela veut dire qu'on a séléctionnée un produit déjà présent dans le local mais qui a 
         //une couleur différente.
