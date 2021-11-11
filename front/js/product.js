@@ -4,7 +4,7 @@ const btnPanier = document.querySelector("#addToCart");
 const itemQty = document.querySelector('#quantity');
 let isColorPresent = true;
 
-let myProduct; 
+//let myProduct; 
 let productTitle = document.querySelector("#title");
 let productDescription = document.querySelector("#description");
 let productPrice = document.querySelector("#price");
@@ -36,11 +36,11 @@ btnPanier.addEventListener("click", () => {
 
     //On vérifie si dans le localStorage se trouve la clé "idProduct"
     if (localStorage.getItem(`${idProduct}`)) {
-        console.log(cart);
+        //console.log(cart);
         //boucler afin de vérifier les éléments pairs = couleur.
         //for (let i = 0; i < cart.length; i = i + 2) {
             cart.map((element) => {
-                console.log(element.color);
+                //console.log(element.color);
                 //couleur qu'on a sélectionnée est égale à celle présente dans l'Item du localStorage
             if (element.color == productColorsOptions.value) {
                 isColorPresent = true; 
