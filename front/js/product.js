@@ -11,7 +11,7 @@
         let productColorsOptions = document.querySelector('#colors');
         let quantity = document.querySelector("#quantity");
         let cart ;
-        let isPresent = true;
+        let isPresent;
         
         function getProductFromId() {
           fetch("http://localhost:3000/api/products/" + idProduct )
@@ -32,6 +32,8 @@
         getProductFromId();
                        
         btnCart.addEventListener("click", (e) => {
+
+          isPresent = false;
           
           if (localStorage.getItem("panier")) {
             cart = JSON.parse(localStorage.getItem("panier"));
@@ -46,19 +48,21 @@
                 product.quantity += parseInt(quantity.value);
                 localStorage.setItem("panier", JSON.stringify(cart));
                 isPresent = true;
+                //console.log("test 1" + isPresent);
               }
-              else {
-                isPresent = false;
-              }
+
             });
           } else {
             cart = [];
             cart.push({id: idProduct, quantity: parseInt(quantity.value), color: productColorsOptions.value, name: productName.textContent, price: productPrice.textContent, img: document.querySelector("#productImg").src});
             localStorage.setItem("panier", JSON.stringify(cart));
+            isPresent = true;
+            //console.log("test 3" + isPresent);
           }
            if (!isPresent) {
             cart.push({id: idProduct, quantity: parseInt(quantity.value), color: productColorsOptions.value, name: productName.textContent, price: productPrice.textContent, img: document.querySelector("#productImg").src});
             localStorage.setItem("panier", JSON.stringify(cart));
+            //console.log("test 4" + isPresent);
            } 
         });
         

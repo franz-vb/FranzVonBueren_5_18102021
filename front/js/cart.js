@@ -1,38 +1,48 @@
 let cart = JSON.parse(localStorage.getItem("panier"));
-let inputQuantity;
-// let newPrice = cart[index].price * cart[index].quantity;
-// let newPrice = document.querySelector("#totalPrice");
-// console.log(totalPrice);
+
+function deleteProduct() {
+
+    const btnsDelete = document.querySelectorAll(".deleteItem");
+    
+    //console.log(btnsDelete);
+
+    btnsDelete.forEach((btn) => {
+
+        btn.addEventListener("click", (e) => {
+            const cartItems = document.querySelectorAll(".cart__item");
+            console.log(cartItems);
+            let index = [...btnsDelete].indexOf(btn);
+            console.log(index);
+            cart.splice(index, 1);
+            cartItems[index].remove();
+            localStorage.setItem("panier", JSON.stringify(cart));
+            deleteProduct(); // re initialise la lenght
+        })
+
+    })
+
+};
 
 function onChangeInputsQuantity() {
-    inputQuantity = document.querySelectorAll(".itemQuantity");
+    const inputQuantity = document.querySelectorAll(".itemQuantity");
+    //console.log(inputQuantity);
+    const prices = document.querySelectorAll(".newPrice");
+    //console.log(prices);
     inputQuantity.forEach((quantity) => {
         quantity.addEventListener("change", (e) => {
            let index = [...inputQuantity].indexOf(quantity);
-           //console.log([...inputQuantity].indexOf(quantity));
-           cart[index].quantity = parseInt(e.target.value); 
-           //console.log(cart[index].quantity );
+           //console.log(inputQuantity);
+           cart[index].quantity = parseInt(e.target.value);
            //console.log(e.target.value);
            let newPrice = cart[index].price * cart[index].quantity;
            localStorage.setItem("panier", JSON.stringify(cart));
-           //console.log(newPrice);
            
-           document.querySelector("#newPrice").textContent = `${newPrice}`;
-           //return newPrice;
+           prices[index].innerText = `${newPrice} €`;
+           //console.log(prices[index].innerText );
         })
     });
+    //console.log(prices);
 };
-
-// function updatePrice(price) {
-    
-//     //localStorage.getItem("panier", JSON.stringify(cart));
-//     console.log(cart);
-//     cart.forEach((product) => {
-        
-//     });
-
-// };
-
 
 function getProductFromCart() {
     
@@ -47,7 +57,7 @@ function getProductFromCart() {
                         <div class="cart__item__content__titlePrice">
                             <h2>${product.name}</h2>
                             <p>${product.color}</p>
-                            <p id="newPrice">${product.price * product.quantity}€</p>
+                            <p class="newPrice">${product.price * product.quantity}€</p>
                         </div>
                         <div class="cart__item__content__settings">
                             <div class="cart__item__content__settings__quantity">
@@ -60,7 +70,6 @@ function getProductFromCart() {
                         </div>
                         </div>
                     </article>`;
-                    //document.querySelector("#totalPrice").textContent = `${product.price}`;
             })
             
              
@@ -68,7 +77,7 @@ function getProductFromCart() {
 
 getProductFromCart();
 onChangeInputsQuantity();
-//updatePrice();
+deleteProduct();
 
 
 
