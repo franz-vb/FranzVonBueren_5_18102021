@@ -1,18 +1,35 @@
 let cart = JSON.parse(localStorage.getItem("panier"));
 
+function sumQuantity() {
+    let totalQuantity = 0;
+    const inputQuantity = document.querySelectorAll(".itemQuantity");
+    const finalQuantity = document.querySelector("#totalQuantity");
+    inputQuantity.forEach((quantity) => {
+        totalQuantity += parseInt(quantity.value);
+    })
+    finalQuantity.innerText = totalQuantity;
+};
+
+function sumPrice() {
+    
+    let totalPrice = 0;
+    const prices = document.querySelectorAll(".newPrice");
+    const finalPrice = document.querySelector("#totalPrice");
+    prices.forEach((price) => {
+        totalPrice += parseInt(price.innerText);
+    })
+    finalPrice.innerText = totalPrice;
+
+};
+
 function deleteProduct() {
 
     const btnsDelete = document.querySelectorAll(".deleteItem");
-    
-    //console.log(btnsDelete);
-
     btnsDelete.forEach((btn) => {
 
         btn.addEventListener("click", (e) => {
             const cartItems = document.querySelectorAll(".cart__item");
-            console.log(cartItems);
             let index = [...btnsDelete].indexOf(btn);
-            console.log(index);
             cart.splice(index, 1);
             cartItems[index].remove();
             localStorage.setItem("panier", JSON.stringify(cart));
@@ -24,30 +41,28 @@ function deleteProduct() {
 };
 
 function onChangeInputsQuantity() {
-    const inputQuantity = document.querySelectorAll(".itemQuantity");
-    //console.log(inputQuantity);
+
+    totalQuantity = 0;
+    const inputQuantity = document.querySelectorAll(".itemQuantity"); //inputQuantity tableau d'une collection d'éléments
     const prices = document.querySelectorAll(".newPrice");
-    //console.log(prices);
     inputQuantity.forEach((quantity) => {
         quantity.addEventListener("change", (e) => {
            let index = [...inputQuantity].indexOf(quantity);
-           //console.log(inputQuantity);
            cart[index].quantity = parseInt(e.target.value);
-           //console.log(e.target.value);
            let newPrice = cart[index].price * cart[index].quantity;
            localStorage.setItem("panier", JSON.stringify(cart));
            
            prices[index].innerText = `${newPrice} €`;
-           //console.log(prices[index].innerText );
+           sumQuantity();
+           sumPrice();
         })
+        
     });
-    //console.log(prices);
 };
 
 function getProductFromCart() {
     
             cart.forEach((product) => {
-                //console.log(product)
                 document.querySelector("#cart__items").innerHTML += `
                     <article class="cart__item" data-id="${product.id}">
                         <div class="cart__item__img">
@@ -78,6 +93,8 @@ function getProductFromCart() {
 getProductFromCart();
 onChangeInputsQuantity();
 deleteProduct();
+sumQuantity();
+sumPrice();
 
 
 
