@@ -121,6 +121,7 @@ function sumPrice() {
 function deleteItem(btn) {
 	const btnsDelete = document.querySelectorAll('.deleteItem');
 	let index = [...btnsDelete].indexOf(btn);
+    console.log([...btnsDelete]);
 	cart.splice(index, 1);
 	localStorage.setItem('panier', JSON.stringify(cart));
 	getProductFromCart();
