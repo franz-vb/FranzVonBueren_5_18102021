@@ -109,16 +109,16 @@ function checkErrors(firstNameContact, lastNameContact, addressContact, cityCont
 
 	let isError = false;
 	
-	const regex = /[0-9$&+,:;=?@#|'<>.^*()%!-]/g;
+	const regex = /[a-zA-Z-À-ÖØ-öø-ÿ]{2,}/g;
 	const regexEmail = /[@.]/g;
 	const regexAddress = /[0-9]/g;
 	
-  	if(regex.test(firstNameContact.value))
+  	if(!regex.test(firstNameContact.value))
     {
 		firstNameErrorMsg.textContent = "Caractere interdit"
 		isError = true;
     }
-	else if(regex.test(lastNameContact.value))
+	else if(!regex.test(lastNameContact.value))
     {
 		lastNameErrorMsg.textContent = "Caractere interdit"
 		isError = true;
@@ -128,7 +128,7 @@ function checkErrors(firstNameContact, lastNameContact, addressContact, cityCont
 		addressErrorMsg.textContent = "Caractere interdit"
 		isError = true;
     }
-	else if(regex.test(cityContact.value))
+	else if(!regex.test(cityContact.value))
     {
 		cityErrorMsg.textContent = "Caractere interdit"
 		isError = true;
@@ -138,7 +138,7 @@ function checkErrors(firstNameContact, lastNameContact, addressContact, cityCont
 		emailErrorMsg.textContent = "Adresse mail non valide"
 		isError = true;
     }
-	console.log(isError);
+	//console.log(isError);
 
 	return isError;
 }
@@ -256,9 +256,16 @@ formContact.addEventListener('submit', (e) => {
 			ville: cityContact.value,
 			email: emailContact.value
 		};
+		let order = {
+			contact,
+			products = [id]
+		}
+		e.preventDefault();
+		//console.log(contact);
 	}
-
 });
+
+
 
 
 
