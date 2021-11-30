@@ -97,6 +97,51 @@
 // sumPrice();
 
 let cart = JSON.parse(localStorage.getItem('panier'));
+const formContact = document.querySelector('.cart__order__form');  
+
+function checkErrors(firstNameContact, lastNameContact, addressContact, cityContact, emailContact) {
+
+	let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg');
+	let lastNameErrorMsg = document.querySelector('#lastNameErrorMsg');
+	let addressErrorMsg = document.querySelector('#addressErrorMsg');
+	let cityErrorMsg = document.querySelector('#cityErrorMsg');
+	let emailErrorMsg = document.querySelector('#emailErrorMsg');
+
+	let isError = false;
+	
+	const regex = /[0-9$&+,:;=?@#|'<>.^*()%!-]/g;
+	const regexEmail = /[@.]/g;
+	const regexAddress = /[0-9]/g;
+	
+  	if(regex.test(firstNameContact.value))
+    {
+		firstNameErrorMsg.textContent = "Caractere interdit"
+		isError = true;
+    }
+	else if(regex.test(lastNameContact.value))
+    {
+		lastNameErrorMsg.textContent = "Caractere interdit"
+		isError = true;
+    }
+	else if(!regexAddress.test(addressContact.value))
+    {
+		addressErrorMsg.textContent = "Caractere interdit"
+		isError = true;
+    }
+	else if(regex.test(cityContact.value))
+    {
+		cityErrorMsg.textContent = "Caractere interdit"
+		isError = true;
+    }
+	else if(!regexEmail.test(emailContact.value))
+    {
+		emailErrorMsg.textContent = "Adresse mail non valide"
+		isError = true;
+    }
+	console.log(isError);
+
+	return isError;
+}
 
 function sumQuantity() {
 	let totalQuantity = 0;
@@ -121,7 +166,6 @@ function sumPrice() {
 function deleteItem(btn) {
 	const btnsDelete = document.querySelectorAll('.deleteItem');
 	let index = [...btnsDelete].indexOf(btn);
-    console.log([...btnsDelete]);
 	cart.splice(index, 1);
 	localStorage.setItem('panier', JSON.stringify(cart));
 	getProductFromCart();
@@ -193,6 +237,31 @@ getProductFromCart();
 onChangeInputsQuantity();
 sumQuantity();
 sumPrice();
+
+formContact.addEventListener('submit', (e) => {
+	
+	let firstNameContact = document.querySelector('#firstName');
+	let lastNameContact = document.querySelector('#lastName');
+	let addressContact = document.querySelector('#address');
+	let cityContact = document.querySelector('#city');
+	let emailContact = document.querySelector('#email');
+
+	if (checkErrors(firstNameContact, lastNameContact, addressContact, cityContact, emailContact)) {
+		e.preventDefault();
+	} else {
+		let contact = {
+			prenom: firstNameContact.value,
+			nom: lastNameContact.value,
+			adresse: addressContact.value,
+			ville: cityContact.value,
+			email: emailContact.value
+		};
+	}
+
+});
+
+
+
 
 
 
