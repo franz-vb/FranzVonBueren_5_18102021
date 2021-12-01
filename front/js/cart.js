@@ -109,35 +109,51 @@ function checkErrors(firstNameContact, lastNameContact, addressContact, cityCont
 
 	let isError = false;
 	
-	const regex = /[a-zA-Z-À-ÖØ-öø-ÿ]{2,}/g;
+	const regex = /[0-9$&+,:;=?@#|'<>.^*()%!-]/g;
 	const regexEmail = /[@.]/g;
 	const regexAddress = /[0-9]/g;
 	
-  	if(!regex.test(firstNameContact.value))
+  	if(regex.test(firstNameContact.value))
     {
 		firstNameErrorMsg.textContent = "Caractere interdit"
 		isError = true;
     }
-	else if(!regex.test(lastNameContact.value))
+	else{
+		firstNameErrorMsg.textContent = '';
+	}
+	if(regex.test(lastNameContact.value))
     {
 		lastNameErrorMsg.textContent = "Caractere interdit"
 		isError = true;
     }
-	else if(!regexAddress.test(addressContact.value))
+	else{
+		lastNameErrorMsg.textContent = '';
+	}
+	 if(!regexAddress.test(addressContact.value))
     {
 		addressErrorMsg.textContent = "Caractere interdit"
 		isError = true;
     }
-	else if(!regex.test(cityContact.value))
+	else{
+		addressErrorMsg.textContent = '';
+	}
+	 if(regex.test(cityContact.value))
     {
 		cityErrorMsg.textContent = "Caractere interdit"
 		isError = true;
     }
-	else if(!regexEmail.test(emailContact.value))
+	else{
+		cityErrorMsg.textContent = '';
+	}
+	 if(!regexEmail.test(emailContact.value))
     {
 		emailErrorMsg.textContent = "Adresse mail non valide"
 		isError = true;
     }
+	else{
+		emailErrorMsg.textContent = '';
+	}
+	
 	//console.log(isError);
 
 	return isError;
@@ -249,21 +265,39 @@ formContact.addEventListener('submit', (e) => {
 	if (checkErrors(firstNameContact, lastNameContact, addressContact, cityContact, emailContact)) {
 		e.preventDefault();
 	} else {
-		let contact = {
-			prenom: firstNameContact.value,
-			nom: lastNameContact.value,
-			adresse: addressContact.value,
-			ville: cityContact.value,
-			email: emailContact.value
-		};
-		let order = {
-			contact,
-			products = [id]
-		}
-		e.preventDefault();
-		//console.log(contact);
-	}
+		let commande = {
+			contact: {
+				  firstName: firstNameContact.value,
+				  lastName: lastNameContact.value,
+				  address: addressContact.value,
+				  city: cityContact.value,
+				  email: emailContact.value
+				},
+			products: []
+	  
+	  };
+		
+		cart.forEach(product => {
+			commande.products.push(product.id);
+		})
+
+		fetch("http://localhost:3000/api/products/order", {
+			method: "POST",
+			headers: {
+			'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(
+				commande
+			)
+			})
+			.then(response => response.json())
+			.then(response => console.log(response))
+			.catch(error => {console.log(JSON.parse(error))});
+				}
+				e.preventDefault();
 });
+
+
 
 
 
