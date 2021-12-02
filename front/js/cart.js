@@ -261,11 +261,12 @@ formContact.addEventListener('submit', (e) => {
 	let addressContact = document.querySelector('#address');
 	let cityContact = document.querySelector('#city');
 	let emailContact = document.querySelector('#email');
+	let numberOrder = document.querySelector('#orderId');
 
 	if (checkErrors(firstNameContact, lastNameContact, addressContact, cityContact, emailContact)) {
 		e.preventDefault();
 	} else {
-		let commande = {
+		let order = {
 			contact: {
 				  firstName: firstNameContact.value,
 				  lastName: lastNameContact.value,
@@ -278,7 +279,7 @@ formContact.addEventListener('submit', (e) => {
 	  };
 		
 		cart.forEach(product => {
-			commande.products.push(product.id);
+			order.products.push(product.id);
 		})
 
 		fetch("http://localhost:3000/api/products/order", {
@@ -287,14 +288,16 @@ formContact.addEventListener('submit', (e) => {
 			'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(
-				commande
+				order
 			)
 			})
 			.then(response => response.json())
-			.then(response => console.log(response))
+			.then(response => {document.location.href=`confirmation.html?order=${response.orderId}`})
 			.catch(error => {console.log(JSON.parse(error))});
-				}
-				e.preventDefault();
+				}	
+				//e.preventDefault();
+				
+
 });
 
 
