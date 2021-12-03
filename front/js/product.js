@@ -47,6 +47,7 @@
                 //console.log("egal");
                 product.quantity += parseInt(quantity.value);
                 localStorage.setItem("panier", JSON.stringify(cart));
+                ("Produit ajouté au panier");
                 isPresent = true;
                 //console.log("test 1" + isPresent);
               }
@@ -56,12 +57,14 @@
             cart = [];
             cart.push({id: idProduct, quantity: parseInt(quantity.value), color: productColorsOptions.value, name: productName.textContent, price: productPrice.textContent, img: document.querySelector("#productImg").src});
             localStorage.setItem("panier", JSON.stringify(cart));
+            alert("Produit ajouté au panier");
             isPresent = true;
             //console.log("test 3" + isPresent);
           }
            if (!isPresent) {
             cart.push({id: idProduct, quantity: parseInt(quantity.value), color: productColorsOptions.value, name: productName.textContent, price: productPrice.textContent, img: document.querySelector("#productImg").src});
             localStorage.setItem("panier", JSON.stringify(cart));
+            alert("Produit ajouté au panier");
             //console.log("test 4" + isPresent);
            } 
         });
