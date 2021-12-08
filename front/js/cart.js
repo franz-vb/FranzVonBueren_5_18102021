@@ -13,7 +13,7 @@ function checkErrors(firstNameContact, lastNameContact, addressContact, cityCont
 
   const regexText = /[a-zA-Z\s\-À-ÖØ-öø-ÿ]+$/;
   const regexEmail = /([a-z0-9.\-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
-  const regexAddress = /^[a-zA-Z0-9, -À-ÖØ-öø-ÿ]+$/;
+  const regexAddress = /^[a-zA-Z0-9,\s\-À-ÖØ-öø-ÿ]+$/;
 
 
   if (!regexText.test(firstNameContact)) {
