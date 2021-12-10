@@ -1,6 +1,7 @@
 let cart = JSON.parse(localStorage.getItem("panier"));
 const formContact = document.querySelector(".cart__order__form");
 
+// Vérification du formulaire
 function checkErrors(firstNameContact, lastNameContact, addressContact, cityContact, emailContact) {
   console.log(firstNameContact + " " + lastNameContact + " " + addressContact + " " + cityContact + " " + emailContact);
   let firstNameErrorMsg = document.querySelector("#firstNameErrorMsg");
@@ -47,11 +48,10 @@ function checkErrors(firstNameContact, lastNameContact, addressContact, cityCont
     emailErrorMsg.textContent = "";
   }
 
-  //console.log(isError);
-
   return isError;
 }
 
+// Calcule de la quantité total
 function sumQuantity() {
   let totalQuantity = 0;
   const inputQuantity = document.querySelectorAll(".itemQuantity");
@@ -62,6 +62,7 @@ function sumQuantity() {
   finalQuantity.innerText = totalQuantity;
 }
 
+// Calcule du prix total
 function sumPrice() {
   let totalPrice = 0;
   const prices = document.querySelectorAll(".newPrice");
@@ -72,6 +73,7 @@ function sumPrice() {
   finalPrice.innerText = totalPrice;
 }
 
+// Suppression
 function deleteItem(btn) {
   const btnsDelete = document.querySelectorAll(".deleteItem");
   let index = [...btnsDelete].indexOf(btn);
@@ -89,12 +91,11 @@ function addListenerDelete() {
   });
 }
 
+// Changement du prix selon la quantité
 function onChangeInputsQuantity() {
   totalQuantity = 0;
   const inputQuantity = document.querySelectorAll(".itemQuantity"); //inputQuantity tableau d'une collection d'éléments
-  //console.log(inputQuantity);
   const prices = document.querySelectorAll(".newPrice");
-  //console.log(prices);
   inputQuantity.forEach((quantity) => {
     quantity.addEventListener("change", (e) => {
       let index = [...inputQuantity].indexOf(quantity);
@@ -109,11 +110,11 @@ function onChangeInputsQuantity() {
   });
 }
 
+// Vu sur les produit ajouter au panier
 function getProductFromCart() {
   document.querySelector("#cart__items").innerHTML = "";
 
   cart.forEach((product) => {
-    //console.log(product)
     document.querySelector("#cart__items").innerHTML += `
                     <article class="cart__item" data-id="${product.id}">
                         <div class="cart__item__img">
@@ -146,6 +147,7 @@ onChangeInputsQuantity();
 sumQuantity();
 sumPrice();
 
+// Création du formulaire pour le bon de validation
 formContact.addEventListener("submit", (e) => {
   e.preventDefault();
   let firstNameContact = document.querySelector("#firstName");
@@ -153,7 +155,6 @@ formContact.addEventListener("submit", (e) => {
   let addressContact = document.querySelector("#address");
   let cityContact = document.querySelector("#city");
   let emailContact = document.querySelector("#email");
-  //let numberOrder = document.querySelector('#orderId');
 
   if (checkErrors(firstNameContact.value, lastNameContact.value, addressContact.value, cityContact.value, emailContact.value)) {
   } else {

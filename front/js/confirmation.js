@@ -5,5 +5,3 @@ let order = document.querySelector("#orderId");
 order.textContent = orderId;
 
 localStorage.clear();
-
-//console.log(orderId);
