@@ -19,6 +19,8 @@ function getProductFromId() {
   fetch("http://localhost:3000/api/products/" + idProduct)
     .then((response) => response.json())
     .then((product) => {
+
+      /* Afficher les données du produit sur la page */ 
       productName.textContent = `${product.name}`;
       productDescription.textContent = `${product.description}`;
       productPrice.textContent = `${product.price}`;
@@ -32,7 +34,7 @@ function getProductFromId() {
 
 getProductFromId();
 
-/* Ecouteur d'événement sur le bouton "ajout au panier" */
+/* Ecouteur d'événement sur le bouton "Ajouter au panier" */
 btnCart.addEventListener("click", (e) => {
   isPresent = false;
 

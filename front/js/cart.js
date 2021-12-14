@@ -48,7 +48,6 @@ function checkErrors(firstNameContact, lastNameContact, addressContact, cityCont
     emailErrorMsg.textContent = "";
   }
 
-   
   return isError;
 }
 
