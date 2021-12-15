@@ -13,7 +13,6 @@ let cart;
 let isPresent;
 
 /* Fonction qui récupère les données du produit clické */
-
 function getProductFromId() {
   /* On fetch sur l'API et on récupère les datas du produit clické*/
   fetch("http://localhost:3000/api/products/" + idProduct)

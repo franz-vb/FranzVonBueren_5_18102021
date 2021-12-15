@@ -1,5 +1,5 @@
 // Requêter l’API pour lui demander l’ensemble des produits  
-function obtenirDonneeDeApi() {
+function getDataFromApi() {
   fetch("http://localhost:3000/api/products")
       .then((response) => response.json())
       .then((data) => {
@@ -17,4 +17,4 @@ function obtenirDonneeDeApi() {
       });
 };
 
-obtenirDonneeDeApi();
+getDataFromApi();
