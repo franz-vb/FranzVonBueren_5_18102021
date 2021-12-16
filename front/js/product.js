@@ -75,7 +75,8 @@ btnCart.addEventListener("click", (e) => {
       price: productPrice.textContent,
       img: document.querySelector("#productImg").src,
     });
-    localStorage.setItem("panier", JSON.stringify(cart));
+    localStorage.setItem("panier", JSON.stringify(cart));   
+    console.log(("panier", JSON.stringify(cart)));
     alert("Produit ajouté au panier");
   }
 });
