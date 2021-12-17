@@ -53,7 +53,6 @@ btnCart.addEventListener("click", (e) => {
     /* Si le produit n'était pas présent dans le panier, on crée une nouvelle ligne produit */
   } else {
     if (quantity.value != 0 && productColorsOptions.value != "") {
-      console.log("test 1");
       cart = [];
       cart.push({
         id: idProduct,
@@ -63,8 +62,7 @@ btnCart.addEventListener("click", (e) => {
         price: productPrice.textContent,
         img: document.querySelector("#productImg").src,
       });
-      localStorage.setItem("panier", JSON.stringify(cart));  
-      console.log(("panier", JSON.stringify(cart)));
+      localStorage.setItem("panier", JSON.stringify(cart));
       alert("Produit ajouté au panier");
       isPresent = true;
     }
