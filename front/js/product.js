@@ -52,21 +52,25 @@ btnCart.addEventListener("click", (e) => {
 
     /* Si le produit n'était pas présent dans le panier, on crée une nouvelle ligne produit */
   } else {
-    cart = [];
-    cart.push({
-      id: idProduct,
-      quantity: parseInt(quantity.value),
-      color: productColorsOptions.value,
-      name: productName.textContent,
-      price: productPrice.textContent,
-      img: document.querySelector("#productImg").src,
-    });
-    localStorage.setItem("panier", JSON.stringify(cart));
-    alert("Produit ajouté au panier");
-    isPresent = true;
+    if (quantity.value != 0 && productColorsOptions.value != "") {
+      console.log("test 1");
+      cart = [];
+      cart.push({
+        id: idProduct,
+        quantity: parseInt(quantity.value),
+        color: productColorsOptions.value,
+        name: productName.textContent,
+        price: productPrice.textContent,
+        img: document.querySelector("#productImg").src,
+      });
+      localStorage.setItem("panier", JSON.stringify(cart));  
+      console.log(("panier", JSON.stringify(cart)));
+      alert("Produit ajouté au panier");
+      isPresent = true;
+    }
   }
   /* Si le produit n'est pas présent dans le localStorage alors : */
-  if (!isPresent) {
+  if (!isPresent && quantity.value != 0 && productColorsOptions.value != "") {
     cart.push({
       id: idProduct,
       quantity: parseInt(quantity.value),
@@ -75,8 +79,7 @@ btnCart.addEventListener("click", (e) => {
       price: productPrice.textContent,
       img: document.querySelector("#productImg").src,
     });
-    localStorage.setItem("panier", JSON.stringify(cart));   
-    console.log(("panier", JSON.stringify(cart)));
+    localStorage.setItem("panier", JSON.stringify(cart)); 
     alert("Produit ajouté au panier");
   }
 });
